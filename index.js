@@ -1,5 +1,8 @@
 ///// SET YOUR USERNAME, PASSWORD, AND PROJECT ID HERE /////////
 import {info} from './secrets.js'
+
+import fetch from "node-fetch"
+import { getHourly, getProjects, idsToCloudVar } from "./funcs.js";
 //////////////////////////////////////////////////////////////
 
 
@@ -17,11 +20,8 @@ function commafy(numStr) {
     return numStr
 }
 
-let lastProjectStats = {}
-
-import fetch from "node-fetch"
-import { getProjects, idsToCloudVar } from "./funcs.js";
-
+let started = false;
+setInterval(async ()=>{featuredProjects=getHourly(3)},1000 * 60 * 60)
 
 async function start() {Scratch.UserSession.create(info.username, info.password, async (err, user) => {
     let token;
@@ -54,10 +54,16 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                 try{
 
                     let projects = await getProjects(10)
+                    if(!started) {featuredProjects=getHourly(3); started=true}
+
                     // let projects = [1,2,3]
                     let cloudVar = idsToCloudVar(projects,info.digs)
                     let projectLinksString = projects.map(p=>"https://scratch.mit.edu/projects/"+p).join('\n')
                     console.log(JSON.stringify(JSON.stringify(projectLinksString)))
+
+                    let featuredLinksString = featuredProjects.map(p=>"https://scratch.mit.edu/projects/"+p).join('\n')
+
+
                 // if(projectStats.loves === lastProjectStats.loves && projectStats.favorites === lastProjectStats.favorites && projectStats.remixes === lastProjectStats.remixes && projectStats.views === lastProjectStats.views) {continue;}
                 // else {lastProjectStats = projectStats}
                  // console.log(projectStats)
@@ -79,7 +85,7 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                     "referrerPolicy": "strict-origin-when-cross-origin",
                     // "body": `{\"instructions\":${JSON.stringify("https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21")}}`,
                     // "body": `{\"instructions\":${JSON.stringify(projectLinksString)}}`,
-                    "body": `{\"instructions\":${JSON.stringify(`Here are some random projects shared just now:\n${projectLinksString}`)}}`,
+                    "body": `{\"instructions\":${JSON.stringify(`Go surprise these scratchers and comment on these:\n${featuredProjects}\n(^^^ These regen every hour)\n(⌄⌄⌄ Shared just now ⌄⌄⌄)\n${projectLinksString}`)}}`,
                     "method": "PUT",
                     "mode": "cors"
                 }).then(async res => {console.log(await res.json()) });

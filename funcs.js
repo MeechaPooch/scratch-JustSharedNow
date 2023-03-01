@@ -17,9 +17,11 @@ const proxyAgent = new HttpsProxyAgent('http://127.0.0.1:9080');
 ////////////////////////////////////////////////
 
 let id = 811779604
-
+let lastRes = [811797026,811797015,811797013]
+export function getHourly(n) {
+    return lastRes.slice(-n);
+}
 export async function getProjects(n) {
-
     let ret = []
     let ready = false;
 
@@ -33,7 +35,7 @@ let HOP_STREAK = 10
 let HOP_AMM = 50000 * 10;
 while(true) {
 
-    if(ret.length >= n) { return ret }
+    if(ret.length >= n) { lastRes = ret; return ret }
     
   (async()=>{  try{
         let json= await (await fetch('https://api.scratch.mit.edu/projects/' + id + '/', { agent: proxyAgent})).json(); 
