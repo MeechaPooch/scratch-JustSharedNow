@@ -20,6 +20,7 @@ function commafy(numStr) {
     return numStr
 }
 
+let featuredProjects = getHourly(3)
 let started = false;
 setInterval(async ()=>{featuredProjects=getHourly(3)},1000 * 60 * 60)
 
