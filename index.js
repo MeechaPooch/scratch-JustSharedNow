@@ -78,7 +78,7 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                     "body": `{\"title\":\"Here are some random projects shared just now:\\n${projectLinksString}\"}`,
                     "method": "PUT",
                     "mode": "cors"
-                }).then(async res => {/*console.log(await res.json()) */});
+                }).then(async res => {console.log(await res.json()) });
 
 
                 sess.set("☁ projects", cloudVar);
