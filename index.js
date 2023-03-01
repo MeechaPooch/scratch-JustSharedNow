@@ -54,13 +54,15 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                 try{
 
                     let projects = await getProjects(10)
+                    // let projects = [1,2,3]
                     let cloudVar = idsToCloudVar(projects,info.digs)
-                    let projectLinksString = projects.map(p=>"https://scratch.mit.edu/projects/"+p).join('\\n')
+                    let projectLinksString = projects.map(p=>"https://scratch.mit.edu/projects/"+p).join('\n')
+                    console.log(JSON.stringify(JSON.stringify(projectLinksString)))
                 // if(projectStats.loves === lastProjectStats.loves && projectStats.favorites === lastProjectStats.favorites && projectStats.remixes === lastProjectStats.remixes && projectStats.views === lastProjectStats.views) {continue;}
                 // else {lastProjectStats = projectStats}
                  // console.log(projectStats)
 
-                 await sleep(Math.max((20-(Date.now()-lastTime)) * 1000,0))
+                 await sleep(Math.max((60-(Date.now()-lastTime)) * 1000,0))
 
 
                 fetch(`https://api.scratch.mit.edu/projects/${info.projectId}`, {
@@ -75,7 +77,9 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                     },
                     "referrer": "https://scratch.mit.edu/",
                     "referrerPolicy": "strict-origin-when-cross-origin",
-                    "body": `{\"title\":\"Here are some random projects shared just now:\\n${projectLinksString}\"}`,
+                    // "body": `{\"instructions\":${JSON.stringify("https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21")}}`,
+                    // "body": `{\"instructions\":${JSON.stringify(projectLinksString)}}`,
+                    "body": `{\"instructions\":${JSON.stringify(`Here are some random projects shared just now:\n${projectLinksString}`)}}`,
                     "method": "PUT",
                     "mode": "cors"
                 }).then(async res => {console.log(await res.json()) });
@@ -87,6 +91,7 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                 // sess.set("☁ views", projectStats.views);
                 // sess.set("☁ newScratcherTestVal", 1);
                 console.log('done')
+                lastTime = Date.now()
             } catch(err) {
                 console.log(err)
                 start();
