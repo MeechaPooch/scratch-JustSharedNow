@@ -86,7 +86,7 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                     "referrerPolicy": "strict-origin-when-cross-origin",
                     // "body": `{\"instructions\":${JSON.stringify("https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21")}}`,
                     // "body": `{\"instructions\":${JSON.stringify(projectLinksString)}}`,
-                    "body": `{\"instructions\":${JSON.stringify(`Go surprise these scratchers and comment on these:\n${featuredProjects}\n(^^^ These regen every hour)\n(⌄⌄⌄ Shared just now ⌄⌄⌄)\n${projectLinksString}`)}}`,
+                    "body": `{\"instructions\":${JSON.stringify(`Go surprise these scratchers and comment on these:\n${featuredLinksString}\n(^^^ These regen every hour)\n(⌄⌄⌄ Shared just now ⌄⌄⌄)\n${projectLinksString}`)}}`,
                     "method": "PUT",
                     "mode": "cors"
                 }).then(async res => {console.log(await res.json()) });
