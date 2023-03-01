@@ -1,0 +1,19 @@
+{
+  "name": "newprojects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "https-proxy-agent": "^5.0.1",
+    "node-fetch": "^3.3.0",
+    "scratch-api": "^1.1.12",
+    "tor-request": "^3.1.0"
+  }
+}
