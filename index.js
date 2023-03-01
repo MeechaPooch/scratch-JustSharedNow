@@ -62,7 +62,7 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                 // else {lastProjectStats = projectStats}
                  // console.log(projectStats)
 
-                 await sleep(Math.max((60-(Date.now()-lastTime)) * 1000,0))
+                 await sleep(Math.max(((60 * 1000)-(Date.now()-lastTime)),0))
 
 
                 fetch(`https://api.scratch.mit.edu/projects/${info.projectId}`, {
