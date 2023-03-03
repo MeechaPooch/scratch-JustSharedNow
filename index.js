@@ -22,7 +22,7 @@ function commafy(numStr) {
 
 let featuredProjects = getHourly(3)
 let started = false;
-setInterval(async ()=>{featuredProjects=getHourly(3)},1000 * 60 * 60)
+setInterval(async ()=>{featuredProjects=getHourly(3)},8 * 1000 * 60 * 60) // update every 8 hours
 
 async function start() {Scratch.UserSession.create(info.username, info.password, async (err, user) => {
     let token;
@@ -86,7 +86,7 @@ async function start() {Scratch.UserSession.create(info.username, info.password,
                     "referrerPolicy": "strict-origin-when-cross-origin",
                     // "body": `{\"instructions\":${JSON.stringify("https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21 \n https://scratch.mit.edu/projects/21")}}`,
                     // "body": `{\"instructions\":${JSON.stringify(projectLinksString)}}`,
-                    "body": `{\"instructions\":${JSON.stringify(`Go surprise these scratchers and comment on these:\n${featuredLinksString}\n(^^^ These regen every hour)\n(⌄⌄⌄ These regen every minute ⌄⌄⌄)\n${projectLinksString}`)}}`,
+                    "body": `{\"instructions\":${JSON.stringify(`Go surprise these scratchers and comment on these:\n${featuredLinksString}\n(^^^ These regen every 8 hours)\n(⌄⌄⌄ These regen every minute ⌄⌄⌄)\n${projectLinksString}`)}}`,
                     "method": "PUT",
                     "mode": "cors"
                 }).then(async res => {console.log(await res.json()) });
